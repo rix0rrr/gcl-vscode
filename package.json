@@ -1,0 +1,38 @@
+{
+    "name": "gcl",
+    "version": "0.0.1",
+    "description": "GCL language plugin",
+    "engines": {
+        "vscode": "^1.4.0"
+    },
+    "categories": [
+        "Languages",
+        "Linters",
+        "Other"
+    ],
+    "publisher": "Rico Huijbers <rix0rrr@gmail.com>",
+    "contributes": {
+        "languages": [{
+            "id": "gcl",
+            "aliases": ["GCL", "gcl"],
+            "extensions": [".gcl"]
+        }]
+    },
+	"activationEvents": [
+		"onLanguage:gcl"
+    ],
+    "scripts": {
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "main": "./out/src/extension",
+    "dependencies": {
+        "vscode-languageclient": "^2.2.1",
+        "vscode-languageserver": "^2.2.0"
+    },
+    "devDependencies": {
+        "typescript": "^1.8.5",
+        "vscode": "^0.11.0"
+    }
+}
