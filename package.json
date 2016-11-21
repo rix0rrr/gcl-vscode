@@ -1,7 +1,9 @@
 {
     "name": "gcl",
     "version": "0.0.1",
-    "description": "GCL language plugin",
+    "displayName": "GCL language extension",
+    "description": "GCL language extension",
+    "publisher": "rix0rrr",
     "engines": {
         "vscode": "^1.4.0"
     },
@@ -10,7 +12,6 @@
         "Linters",
         "Other"
     ],
-    "publisher": "Rico Huijbers <rix0rrr@gmail.com>",
     "contributes": {
         "languages": [{
             "id": "gcl",
@@ -39,5 +40,7 @@
     "devDependencies": {
         "typescript": "^1.8.5",
         "vscode": "^0.11.0"
-    }
+    },
+    "license": "MIT",
+    "repository": { "type": "git", "url": "https://github.com/rix0rrr/gcl-vscode.git" }
 }
