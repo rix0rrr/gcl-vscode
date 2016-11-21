@@ -16,6 +16,11 @@
             "id": "gcl",
             "aliases": ["GCL", "gcl"],
             "extensions": [".gcl"]
+        }],
+        "grammars": [{
+            "language": "gcl",
+            "scopeName": "source.gcl",
+            "path": "./syntaxes/gcl-syntax.tmLanguage"
         }]
     },
 	"activationEvents": [

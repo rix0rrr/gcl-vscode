@@ -1,0 +1,26 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: GCL
+scopeName: source.gcl
+fileTypes: [gcl]
+uuid: 926f5d50-6f0c-4478-b054-14a102b12702
+
+patterns:
+- name: keyword
+  match: (?<!\w)(inherit|include|true|false|null|and|or|not|base|for|in|if|else|then)(?!\w)
+- name: comment.line.hash
+  match: '#.*$\n?'
+- name: string.quoted.double
+  begin: '"'
+  end: '(?<!\\\\)"'
+- name: string.quoted.single
+  begin: "'"
+  end: "(?<!\\\\)'"
+- name: constant.numeric
+  match: -?[0-9]+(?:\.[0-9]+)?
+- name: meta.structure.array
+  match: \[|\]
+- name: meta.structure.tuple
+  match: \{|\}
+- name: support.variable.gcl
+  match: '[a-zA-Z_]([a-zA-Z0-9_:-]*[a-zA-Z0-9_])?(?=\s*=)'
