@@ -1,8 +1,8 @@
 {
     "name": "gcl",
     "version": "0.0.1",
-    "displayName": "GCL language extension",
-    "description": "GCL language extension",
+    "displayName": "GCL",
+    "description": "GCL language syntax and autocomplete",
     "publisher": "rix0rrr",
     "engines": {
         "vscode": "^1.4.0"

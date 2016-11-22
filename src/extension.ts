@@ -10,7 +10,7 @@ import { LanguageClient, LanguageClientOptions, SettingMonitor, ServerOptions, T
 let DEV_MODE = false;
 
 export function activate(context: ExtensionContext) {
-    console.log('GCL Server Started');
+    console.log('GCL Extension Started');
 	let serverOptions: ServerOptions;
 
 	if (DEV_MODE) {
@@ -22,7 +22,14 @@ export function activate(context: ExtensionContext) {
 		serverOptions = () => new Promise<child_process.ChildProcess>((resolve, reject) => {
 			function spawnServer(...args: string[]): child_process.ChildProcess {
 				let childProcess = child_process.spawn("gcls");
-				childProcess.stderr.on('data', data => { console.log(data.toString()); });
+				childProcess.stderr.on('data', data => {
+					console.log(data.toString());
+				});
+				childProcess.on('error', err => {
+					console.warn(err.message);
+					console.warn('Error running "gcls" command. Code insight is not available.');
+					console.warn('Please run "pip install gcl-language-server" or check your PATH.')
+				});
 				return childProcess; // Uses stdin/stdout for communication
 			}
 
@@ -37,6 +44,7 @@ export function activate(context: ExtensionContext) {
 		synchronize: {
 			// Synchronize the setting section 'languageServerExample' to the server
 			configurationSection: 'gclLanguage',
+
 			// Notify the server about changes to files contained in the workspace
 			fileEvents: workspace.createFileSystemWatcher('**/*.*')
 		}
