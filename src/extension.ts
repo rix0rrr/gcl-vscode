@@ -5,13 +5,15 @@ import * as path from 'path';
 import * as child_process from 'child_process';
 
 import { workspace, Disposable, ExtensionContext, languages, window } from 'vscode';
-import { LanguageClient, LanguageClientOptions, SettingMonitor, ServerOptions, TransportKind } from 'vscode-languageclient';
+import { LanguageClient, LanguageClientOptions, SettingMonitor, ServerOptions, TransportKind, ErrorAction, CloseAction } from 'vscode-languageclient';
+import { Message } from 'vscode-jsonrpc';
 
 let DEV_MODE = false;
 
 export function activate(context: ExtensionContext) {
     console.log('GCL Extension Started');
 	let serverOptions: ServerOptions;
+	let lc: LanguageClient;
 
 	if (DEV_MODE) {
 		serverOptions = {
@@ -23,12 +25,13 @@ export function activate(context: ExtensionContext) {
 			function spawnServer(...args: string[]): child_process.ChildProcess {
 				let childProcess = child_process.spawn("gcls");
 				childProcess.stderr.on('data', data => {
-					console.log(data.toString());
+					lc.warn('Error in language server', data);
+					//console.log(data.toString());
 				});
 				childProcess.on('error', err => {
-					console.warn(err.message);
-					console.warn('Error running "gcls" command. Code insight is not available.');
-					console.warn('Please run "pip install gcl-language-server" or check your PATH.')
+					lc.warn(err.message);
+					lc.warn('Error running "gcls" command. Code insight is not available.');
+					lc.warn('Please run "pip install gcl-language-server" or check your PATH.')
 				});
 				return childProcess; // Uses stdin/stdout for communication
 			}
@@ -51,7 +54,7 @@ export function activate(context: ExtensionContext) {
 	}
 
 	// Create the language client and start the client.
-	let lc = new LanguageClient('GCL Language Service', serverOptions, clientOptions);
+	lc = new LanguageClient('GCL Language Service', serverOptions, clientOptions);
 
 	lc.onNotification({method: "gclDocument/diagnosticsBegin"}, function(f) {
 		window.setStatusBarMessage("GCL analysis: started");
